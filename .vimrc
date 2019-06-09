@@ -2,8 +2,7 @@
 filetype indent on
 filetype plugin on
 syntax on
-set background=dark
-colorscheme apprentice
+set background=light
 set autoindent
 set backspace=indent,eol,start
 au WinLeave * set nocursorline nocursorcolumn
@@ -12,7 +11,7 @@ set cursorcolumn
 set cursorline
 set complete+=d
 set foldmethod=indent
-set guifont=iosevka\ extralight:h13
+set guifont=Pragmata\ Pro\ Mono\ W20-Regular:h13
 set noshowcmd
 set regexpengine=1
 set ignorecase
