@@ -1,6 +1,5 @@
 "GENERAL
-filetype indent on
-filetype plugin on
+filetype plugin indent on
 syntax on
 set background=light
 set autoindent
@@ -54,11 +53,12 @@ set statusline=
 set columns=124
 set colorcolumn=80
 set clipboard=unnamed
+set nomodeline
 
 "KEYMAPS
 nnoremap gb :Buffers<CR>
 nnoremap ; :
-map \] <C-W>w
+map <D-W><D-W> <C-W>w
 map æ :terminal node<CR>
 map ÷ :w<CR>:!node  %<CR>
 noremap j gj
@@ -142,6 +142,7 @@ highlight GitGutterDelete guifg=#878787 guibg=#222222 ctermfg=1
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 highlight Directory guifg=#7e8aa2 ctermfg=red
+let NERDTreeMinimalUI=1
 
 "MISC
 tnoremap <silent> ` <c-w>:ToggleTerminal<CR>
@@ -201,3 +202,13 @@ command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, '--color-path="0;33"', <ban
 nnoremap 0 :Ag<CR>
 setlocal suffixesadd+=.js
 autocmd BufRead scp://* :set bt=acwrite
+
+"move a line of text using ALT+[jk]
+"https://stackoverflow.com/questions/7501092/can-i-map-alt-key-in-vim
+"https://stackoverflow.com/questions/5379837/is-it-possible-to-mapping-alt-hjkl-in-insert-mode
+nnoremap ∆ :m .+1<CR>==
+nnoremap ˚ :m .-2<CR>==
+inoremap ∆ <Esc>:m .+1<CR>==gi
+inoremap ˚ <Esc>:m .-2<CR>==gi
+vnoremap ∆ :m '>+1<CR>gv=gv
+vnoremap ˚ :m '<-2<CR>gv=gv
