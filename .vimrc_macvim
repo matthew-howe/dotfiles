@@ -1,0 +1,254 @@
+"GENERAL
+filetype plugin indent on
+syntax on
+set background=dark
+colorscheme vilight
+set autoindent
+set backspace=indent,eol,start
+" au WinLeave * set nocursorline nocursorcolumn
+" au WinEnter * set cursorline cursorcolumn
+" set cursorcolumn
+" set cursorline
+set complete+=d
+set foldmethod=indent
+" set guifont=Gohufont:h14
+set guifont=Pragmata\ Pro\ Mono\ W20-Regular:h13
+set noshowcmd
+set regexpengine=1
+set ignorecase
+set incsearch
+set magic
+set grepprg=LC_ALL=C\ grep\ -nrsH
+set guioptions-=r
+set guioptions-=L
+set hidden
+set laststatus=0
+set incsearch
+set mouse=a
+set number
+set expandtab
+set noshowmode
+set noswapfile
+set path& | let &path .= "**"
+set ruler
+set shiftround
+set showmatch
+set autochdir
+set shiftwidth=0
+set textwidth=80
+set tabstop=2
+set encoding=utf-8
+set softtabstop=0
+set shiftwidth=2
+set splitright
+set splitbelow
+set tags=./tags;,tags;
+set wildcharm=<C-z>
+set wildmenu
+set wildmode=full
+set rtp+=/usr/local/opt/fzf
+set noerrorbells
+set novisualbell
+set t_vb=
+autocmd! GUIEnter * set vb t_vb=
+set statusline=
+set columns=135
+set lines=65
+set colorcolumn=80
+set clipboard=unnamed
+set nomodeline
+
+"KEYMAPS
+nnoremap gb :Buffers<CR>
+nnoremap ; :
+map <D-W><D-W> <C-W>w
+map æ :terminal node<CR>
+map ÷ :w<CR>:!node  %<CR>
+noremap j gj
+noremap k gk
+nnoremap _ :NnnPicker '%:p:h'<CR>
+nnoremap - :NERDTreeToggle<CR>
+nnoremap = :Files<CR>
+nmap /  <Plug>(incsearch-forward)
+nmap ?  <Plug>(incsearch-backward)
+nmap g/ <Plug>(incsearch-stay)
+nnoremap “ <C-W><C-J>
+nnoremap ‘ <C-W><C-K>
+nnoremap <D-]> <C-W><C-L>
+nnoremap <D-[> <C-W><C-H
+inoremap (; (<CR>);<C-c>O
+inoremap (, (<CR>),<C-c>O
+inoremap {; {<CR>};<C-c>O
+inoremap {, {<CR>},<C-c>O
+inoremap [; [<CR>];<C-c>O
+inoremap [, [<CR>],<C-c>O
+nnoremap <C-H> <C-W>h
+nnoremap J <C-W>j
+nnoremap <C-K> <C-W>k
+nnoremap <C-L> <C-W>l
+nnoremap H ^
+nnoremap L $
+nnoremap ^ H
+nnoremap $ L
+nnoremap ]b :bnext<CR>
+nnoremap [b :bprevious<CR>
+nnoremap ¡ :set invnumber<CR>
+map <F1> :mksession! ~/current.vim<CR>
+map <F2> :source ~/current.vim<CR>
+map <F4> :Restart<CR>
+nnoremap gs :Gstatus<CR>
+nnoremap g/s /\s\+$<CR>
+nnoremap g/t /\t<CR>
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+map \1 :set columns=80<CR>
+map \2 :set columns=160<CR>
+map ≤ :PymodeRun<CR>
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
+
+"LINTING
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = "◉"
+highlight ALEErrorSign ctermfg=9 ctermbg=NONE guifg=#C30500 guibg=#222222
+highlight ALEWarningSign ctermfg=11 ctermbg=NONE guifg=#ED6237 guibg=#222222
+
+function! LinterStatus() abort
+    let l:counts = ale#statusline#Count(bufnr(''))
+
+    let l:all_errors = l:counts.error + l:counts.style_error
+    let l:all_non_errors = l:counts.total - l:all_errors
+
+    return l:counts.total == 0 ? 'OK' : printf(
+    \   '%dW %dE',
+    \   all_non_errors,
+    \   all_errors
+    \)
+endfunction
+
+" let g:ale_fixers = {
+" \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+" /\   'javascript': ['eslint'],
+" \}
+
+let g:ale_fix_on_save = 1
+let g:ale_enabled = 1
+
+if argv(0) ==# '.'
+    let g:netrw_browse_split = 0
+else
+    let g:netrw_browse_split = 4
+  endif
+
+"TREE
+let NERDTreeQuitOnOpen=1
+highlight GitGutterAdd    guifg=#878787 guibg=#222222 ctermfg=2
+highlight GitGutterChange guifg=#878787 guibg=#222222 ctermfg=3
+highlight GitGutterDelete guifg=#878787 guibg=#222222 ctermfg=1
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+highlight Directory guifg=#7e8aa2 ctermfg=red
+let g:NERDTreeHijackNetrw=1
+let NERDTreeMinimalUI=1
+" NERDTress File highlighting
+function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
+ exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+ exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+endfunction
+
+call NERDTreeHighlightFile('jade', 'green', 'none', 'green', '#151515')
+call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', '#151515')
+call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', '#151515')
+call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
+call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
+call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
+call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
+
+"MISC
+tnoremap <silent> ` <c-w>:ToggleTerminal<CR>
+nnoremap <silent> ` :ToggleTerminal<CR>
+let g:toggle_terminal#command = 'zsh'
+let g:hybrid_custom_term_colors = 1
+let g:hybrid_reduced_contrast = 1
+"
+"PLUGINS
+call plug#begin()
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+Plug 'hail2u/vim-css3-syntax'
+Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+Plug 'w0rp/ale'
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+Plug 'tpope/vim-fugitive'
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-commentary'
+Plug 'haya14busa/incsearch.vim'
+Plug 'alvan/vim-closetag'
+Plug 'tpope/vim-dadbod'
+Plug 'pakutoma/toggle-terminal'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'othree/html5.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'plasticboy/vim-markdown'
+Plug 'junegunn/vim-easy-align'
+Plug 'tpope/vim-surround'
+Plug 'mattn/emmet-vim'
+Plug 'mileszs/ack.vim'
+Plug 'vim-scripts/indentpython.vim'
+Plug 'python-mode/python-mode', { 'branch': 'develop' }
+Plug 'deoplete-plugins/deoplete-jedi'
+Plug 'davidhalter/jedi-vim'
+Plug 'leafgarland/typescript-vim'
+Plug 'ldelossa/vimdark'
+Plug 'soywod/kronos.vim'
+Plug 'andreypopp/vim-colors-plain'
+Plug 'mcchrish/nnn.vim'
+Plug 'metakirby5/codi.vim'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'flazz/vim-colorschemes'
+Plug 'octol/vim-cpp-enhanced-highlight'
+call plug#end()
+packloadall
+silent! helptags ALL
+
+let g:pymode_python = 'python3'
+let python_highlight_all=1
+let g:deoplete#enable_at_startup = 1
+let g:ackprg = 'ag --vimgrep'
+
+let g:nnn#command = 'nnn -d'
+command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, '--color-path="0;33"', <bang>0)
+nnoremap 0 :Ag<CR>
+setlocal suffixesadd+=.js
+autocmd BufRead scp://* :set bt=acwrite
+
+"java
+autocmd Filetype java set makeprg=javac\ %
+set errorformat=%A%f:%l:\ %m,%-Z%p^,%-C%.%#
+map ≥ :make<Return>:copen<Return>
+map <F10> :cprevious<Return>
+map <F11> :cnext<Return>
+
+"move a line of text using ALT+[jk]
+"https://stackoverflow.com/questions/7501092/can-i-map-alt-key-in-vim
+"https://stackoverflow.com/questions/5379837/is-it-possible-to-mapping-alt-hjkl-in-insert-mode
+nnoremap ∆ :m .+1<CR>==
+nnoremap ˚ :m .-2<CR>==
+inoremap ∆ <Esc>:m .+1<CR>==gi
+inoremap ˚ <Esc>:m .-2<CR>==gi
+vnoremap ∆ :m '>+1<CR>gv=gv
+vnoremap ˚ :m '<-2<CR>gv=gv
+
