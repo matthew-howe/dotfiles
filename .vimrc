@@ -3,7 +3,11 @@
 " filetype support
 filetype plugin indent on
 syntax on
-set background=light
+if has("gui_macvim")
+	colorscheme vilight
+else 
+	colorscheme sourcerer
+endif
 runtime macros/matchit.vim
 
 
