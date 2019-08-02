@@ -5,6 +5,7 @@ filetype plugin indent on
 syntax on
 if has("gui_macvim")
 	colorscheme vilight
+	set number
 else 
 	colorscheme sourcerer
 endif
@@ -18,7 +19,7 @@ set complete+=d
 set foldlevelstart=999
 set foldmethod=indent
 set grepprg=LC_ALL=C\ grep\ -nrsH
-set guifont=Fira\ Code:h13
+set guifont=Iosevka:h13
 set hidden
 set incsearch
 set mouse=a
