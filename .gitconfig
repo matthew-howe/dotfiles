@@ -2,7 +2,7 @@
 	name = matthew-howe
 	email = mattehowe@gmail.com
 [core]
-	editor = code --wait
+	editor = vim
 	excludesfile = /Users/matthewhowe/.gitignore_global
 	precomposeUnicode = true
 [credential]
