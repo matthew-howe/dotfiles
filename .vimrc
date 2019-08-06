@@ -4,13 +4,15 @@
 filetype plugin indent on
 syntax on
 if has("gui_macvim")
-	colorscheme vilight
+    set background=light
 	set number
+    set guioptions=
+    au GUIEnter * set vb t_vb=
 else 
+    set background=dark
 	colorscheme sourcerer
 endif
 runtime macros/matchit.vim
-
 
 " various settings
 set autoindent
@@ -37,10 +39,9 @@ set wildmenu
 set wildmode=full
 set clipboard=unnamed
 set splitbelow
-set laststatus=0
 set laststatus=2
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
-
+set noeb vb t_vb=
 
 " plugins
 call plug#begin()
@@ -56,7 +57,6 @@ Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 Plug 'deoplete-plugins/deoplete-jedi'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-vinegar'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
@@ -68,8 +68,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'mileszs/ack.vim'
 Plug 'airblade/vim-rooter'
 Plug 'w0rp/ale'
-Plug 'itchyny/lightline.vim'
-Plug 'ryanoasis/vim-devicons'
+Plug 'scrooloose/nerdtree'
 call plug#end()
 packloadall
 silent! helptags ALL
@@ -84,10 +83,10 @@ augroup minivimrc
     autocmd QuickFixCmdPost    l* lwindow
     autocmd VimEnter            * cwindow
     " various adjustments of the default colorscheme
-    autocmd ColorScheme * hi ModeMsg      cterm=NONE ctermbg=green    ctermfg=black
-                \ hi Search       cterm=NONE ctermbg=yellow   ctermfg=black
-                \ hi StatusLineNC cterm=bold ctermbg=darkgrey
-                \ hi Visual       cterm=NONE ctermbg=white    ctermfg=darkblue
+    " autocmd ColorScheme * hi ModeMsg      cterm=NONE ctermbg=green    ctermfg=black
+    "             \ hi Search       cterm=NONE ctermbg=yellow   ctermfg=black
+    "             \ hi StatusLineNC cterm=bold ctermbg=darkgrey
+    "             \ hi Visual       cterm=NONE ctermbg=white    ctermfg=darkblue
     " Git-specific settings
     autocmd FileType gitcommit nnoremap <buffer> { ?^@@<CR>|nnoremap <buffer> } /^@@<CR>|setlocal iskeyword+=-
 augroup END
@@ -96,7 +95,7 @@ augroup END
 command! -nargs=1 Spaces let b:wv = winsaveview() | execute "setlocal tabstop=" . <args> . " expandtab"   | silent execute "%!expand -it "  . <args> . "" | call winrestview(b:wv) | setlocal ts? sw? sts? et?
 command! -nargs=1 Tabs   let b:wv = winsaveview() | execute "setlocal tabstop=" . <args> . " noexpandtab" | silent execute "%!unexpand -t " . <args> . "" | call winrestview(b:wv) | setlocal ts? sw? sts? et?
 
-" commands for execution
+" compiling 
 nnoremap ; :
 nnoremap ÷ :w<CR>:!node %<CR>
 nnoremap ≥ :w<CR>:!python3 %<CR>
@@ -111,6 +110,8 @@ nnoremap = :Ag<CR>
 
 " juggling with buffers
 nnoremap gb :Buffers<CR>
+tnoremap `` <C-\><C-n><C-w><C-w>
+nnoremap `` <C-w><C-w>
 
 " juggling with git
 nnoremap gs :Gstatus<CR>
@@ -215,125 +216,47 @@ highlight GitGutterAdd ctermfg=green ctermbg=0
 highlight GitGutterChange ctermfg=yellow ctermbg=0
 highlight GitGutterDelete ctermfg=red ctermbg=0
 highlight GitGutterChangeDelete ctermfg=red ctermbg=0
+highlight StatusLine guibg=#FFFFFF guifg=#000000
 
-if has("gui_macvim")
-	let g:lightline = {
-      \ 'colorscheme': 'seoul256',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'fugitive#head'
-      \ },
-      \ }
-else 
-    " matrix statusline
-let s:base03 = [ '#151513', 233 ]
-let s:base02 = [ '#303030', 0 ]
-let s:base01 = [ '#4e4e43', 239 ]
-let s:base00 = [ '#666656', 242  ]
-let s:base0 = [ '#808070', 244 ]
-let s:base1 = [ '#949484', 242 ]
-let s:base2 = [ '#a8a897', 248 ]
-let s:base3 = [ '#e8e8d3', 253 ]
-let s:yellow = [ '#7A7A57', 11 ]
-let s:orange = [ '#7A7A57', 3 ]
-let s:red = [ '#5F8787', 1 ]
-let s:magenta = [ '#8181A6', 13 ]
-let s:cyan = [ '#87ceeb', 12 ]
-let s:green = [ '#7A7A57', 3 ]
-let s:none = [ 'none', 'none' ]
-
-let s:p = {'normal': {}, 'inactive': {}, 'insert': {}, 'replace': {}, 'visual': {}, 'tabline': {}}
-let s:p.normal.left = [ [ s:base02, s:cyan ], [ s:base3, s:base01 ] ]
-let s:p.normal.right = [ [ s:base02, s:base1 ], [ s:base2, s:base01 ] ]
-let s:p.inactive.right = [ [ s:base02, s:base00 ], [ s:base0, s:base02 ] ]
-let s:p.inactive.left =  [ [ s:base0, s:base02 ], [ s:base00, s:base02 ] ]
-let s:p.insert.left = [ [ s:base02, s:red ], [ s:base3, s:base01 ] ]
-let s:p.replace.left = [ [ s:base02, s:red ], [ s:base3, s:base01 ] ]
-let s:p.visual.left = [ [ s:base02, s:green ], [ s:base3, s:base01 ] ]
-let s:p.normal.middle = [ [ s:none, s:none ] ]
-let s:p.inactive.middle = copy(s:p.normal.middle)
-let s:p.tabline.left = [ [ s:base3, s:base00 ] ]
-let s:p.tabline.tabsel = [ [ s:base3, s:base02 ] ]
-let s:p.tabline.middle = copy(s:p.normal.middle)
-let s:p.tabline.right = copy(s:p.normal.right)
-let s:p.normal.error = [ [ s:base02, s:yellow ] ]
-let s:p.normal.warning = [ [ s:yellow, s:base01 ] ]
-
-let g:lightline#colorscheme#nord#palette = lightline#colorscheme#flatten(s:p)
-
-set laststatus=2
-let g:lightline = {
-  \ 'colorscheme': 'nord',
-  \ 'active': {
-  \   'left': [ [ 'filename' ],
-  \             [ 'linter',  'gitbranch' ] ],
-  \   'right': [ [ 'percent', 'lineinfo' ],
-  \              [ 'fileencoding', 'filetype' ] ]
-  \ },
-  \ 'component_function': {
-  \   'modified': 'WizMod',
-  \   'readonly': 'WizRO',
-  \   'gitbranch': 'WizGit',
-  \   'filename': 'WizName',
-  \   'filetype': 'WizType',
-  \   'fileencoding': 'WizEncoding',
-  \   'mode': 'WizMode',
-  \ },
-  \ 'component_expand': {
-  \   'linter': 'WizErrors',
-  \ },
-  \ 'component_type': {
-  \   'readonly': 'error',
-  \   'linter': 'error'
-  \ },
-  \ 'separator': { 'left': '▓▒░', 'right': '░▒▓' },
-  \ 'subseparator': { 'left': '▒', 'right': '░' }
-  \ }
-" \ 'separator': { 'left': '▊▋▌▍▎', 'right': '▎▍▌▋▊' },
-
-function! WizMod()
-  return &ft =~ 'help\|vimfiler' ? '' : &modified ? '» ' : &modifiable ? '' : ''
+" file explorer
+nnoremap - :NERDTreeToggle<CR>
+let NERDTreeQuitOnOpen=1
+highlight GitGutterAdd    guifg=#878787 guibg=#222222 ctermfg=2
+highlight GitGutterChange guifg=#878787 guibg=#222222 ctermfg=3
+highlight GitGutterDelete guifg=#878787 guibg=#222222 ctermfg=1
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+highlight Directory guifg=#7e8aa2 ctermfg=red
+let g:NERDTreeHijackNetrw=1
+let NERDTreeMinimalUI=1
+" file highlighting
+function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
+ exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+ exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
 endfunction
 
-function! WizRO()
-  " ×   
-  return &ft !~? 'help\|vimfiler' && &readonly ? ' ' : ''
-endfunction
+call NERDTreeHighlightFile('jade', 'green', 'none', '#185618', '#FFFFFF')
+call NERDTreeHighlightFile('ini', 'yellow', 'none', '#078193', '#FFFFFF')
+call NERDTreeHighlightFile('md', 'blue', 'none', '#0040CD', '#FFFFFF')
+call NERDTreeHighlightFile('yml', 'yellow', 'none', '#384D54', '#FFFFFF')
+call NERDTreeHighlightFile('config', 'yellow', 'none', '#384D54', '#FFFFFF')
+call NERDTreeHighlightFile('conf', 'yellow', 'none', '#384D54', '#FFFFFF')
+call NERDTreeHighlightFile('cfg', 'yellow', 'none', '#384D54', '#FFFFFF')
+call NERDTreeHighlightFile('json', 'yellow', 'none', '#40D47E', '#FFFFFF')
+call NERDTreeHighlightFile('html', 'yellow', 'none', '#E34C26', '#FFFFFF')
+call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', '#FFFFFF')
+call NERDTreeHighlightFile('css', 'cyan', 'none', '#563D7C', '#FFFFFF')
+call NERDTreeHighlightFile('coffee', 'Red', 'none', '#244776', '#FFFFFF')
+call NERDTreeHighlightFile('js', 'Red', 'none', '#CCBD51', '#FFFFFF')
+call NERDTreeHighlightFile('php', 'Magenta', 'none', '#4F5D95', '#FFFFFF')
+call NERDTreeHighlightFile('h', 'Magenta', 'none', '#555555', '#FFFFFF')
+call NERDTreeHighlightFile('c', 'Magenta', 'none', '#555555', '#FFFFFF')
+call NERDTreeHighlightFile('cpp', 'Magenta', 'none', '#F34B7D', '#FFFFFF')
+call NERDTreeHighlightFile('hpp', 'Magenta', 'none', '#F34B7D', '#FFFFFF')
+call NERDTreeHighlightFile('py', 'Magenta', 'none', '#3572A5', '#FFFFFF')
+call NERDTreeHighlightFile('sh', 'Magenta', 'none', '#04133B', '#FFFFFF')
+call NERDTreeHighlightFile('txt', 'Magenta', 'none', '#CCCCCC', '#FFFFFF')
+call NERDTreeHighlightFile('java', 'Magenta', 'none', '#B07218', '#FFFFFF')
+call NERDTreeHighlightFile('vim', 'Magenta', 'none', '#199F4B', '#FFFFFF')
+call NERDTreeHighlightFile('kt', 'Magenta', 'none', '#F18E33', '#FFFFFF')
 
-function! WizGit()
-  return !IsTree() ? exists('*fugitive#head') ? fugitive#head() : '' : ''
-endfunction
-
-function! IsTree()
-  let l:name = expand('%:t')
-  return l:name =~ 'NetrwTreeListing\|undotree\|NERD' ? 1 : 0
-endfunction
-
-function! WizName()
-  return !IsTree() ? ('' != WizRO() ? WizRO() : WizMod()) . ('' != expand('%:t') ? expand('%:t') : '[none]') : ''
-endfunction
-
-
-function! WizType()
-  return winwidth(0) > 70 ? (strlen(&filetype) ? ' ' . WebDevIconsGetFileTypeSymbol() . ' ' . &filetype : '') : ''
-endfunction
-
-function! WizEncoding()
-  return winwidth(0) > 70 ? (strlen(&fenc) ? &enc : &enc) : ''
-endfunction
-
-function! WizErrors() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
-  " ×   
-  return l:counts.total == 0 ? '' : printf(' %d', l:counts.total)
-endfunction
-
-augroup alestatus
-  au!
-  autocmd User ALELint call lightline#update()
-augroup end
-
-endif
