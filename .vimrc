@@ -197,6 +197,10 @@ if has('nvim')
     colorscheme sourcerer
 endif
 
+if has('gui_running')
+    highlight StatusLine guibg=#FFFFFF guifg=#000000
+endif
+
 if has('gui_running') || has('nvim')
     set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\%{LinterStatus()}\ %P
     function! LinterStatus() abort
@@ -252,11 +256,10 @@ if has('gui_running') || has('nvim')
 
     " color overrrides
     highlight clear SignColumn
-    highlight GitGutterAdd ctermfg=green ctermbg=15
-    highlight GitGutterChange ctermfg=yellow ctermbg=15
-    highlight GitGutterDelete ctermfg=red ctermbg=15
-    highlight GitGutterChangeDelete ctermfg=red ctermbg=15
-    highlight StatusLine guibg=#FFFFFF guifg=#000000
+    highlight GitGutterAdd ctermfg=green ctermbg=0
+    highlight GitGutterChange ctermfg=yellow ctermbg=0
+    highlight GitGutterDelete ctermfg=red ctermbg=0
+    highlight GitGutterChangeDelete ctermfg=red ctermbg=0
 
     " file explorer
     nnoremap - :NERDTreeToggle<CR>
