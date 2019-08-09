@@ -3,6 +3,7 @@
 " filetype support
 filetype plugin indent on
 syntax on
+colorscheme sourcerer
 
 " various settings
 set autoindent
@@ -32,7 +33,6 @@ set splitbelow
 set laststatus=2
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 set noeb vb t_vb=
-set background=light
 " set numberV
 set guioptions=
 au GUIEnter * set vb t_vb=
@@ -55,20 +55,22 @@ if has('nvim') || has('gui_running')
     Plug 'tpope/vim-fugitive'
     Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
     Plug 'airblade/vim-gitgutter'
+    Plug 'Shougo/deoplete-clangx'
+    Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+    Plug 'deoplete-plugins/deoplete-jedi'
 else
     Plug 'tpope/vim-vinegar'
 endif
-Plug 'Shougo/deoplete-clangx'
-Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
-Plug 'deoplete-plugins/deoplete-jedi'
-Plug 'tpope/vim-commentary'
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'mileszs/ack.vim'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug '/usr/local/opt/fzf'
-Plug 'junegunn/fzf.vim'
-Plug 'mileszs/ack.vim'
+Plug 'mattn/emmet-vim'
+Plug 'rhysd/vim-wasm'
+Plug 'tpope/vim-commentary'
 Plug 'airblade/vim-rooter'
 call plug#end()
 packloadall
@@ -90,8 +92,6 @@ augroup END
 " commands for adjusting indentation rules manually
 command! -nargs=1 Spaces let b:wv = winsaveview() | execute "setlocal tabstop=" . <args> . " expandtab"   | silent execute "%!expand -it "  . <args> . "" | call winrestview(b:wv) | setlocal ts? sw? sts? et?
 command! -nargs=1 Tabs   let b:wv = winsaveview() | execute "setlocal tabstop=" . <args> . " noexpandtab" | silent execute "%!unexpand -t " . <args> . "" | call winrestview(b:wv) | setlocal ts? sw? sts? et?
-
-
 
 " compiling 
 nnoremap ; :
@@ -193,13 +193,6 @@ function! s:CCR()
     else | return "\<CR>" | endif
 endfunction
 
-if has('nvim')
-    colorscheme sourcerer
-endif
-
-if has('gui_running')
-    highlight StatusLine guibg=#FFFFFF guifg=#000000
-endif
 
 if has('gui_running') || has('nvim')
     set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\%{LinterStatus()}\ %P
@@ -217,27 +210,6 @@ if has('gui_running') || has('nvim')
     endfunction
     " juggling with git
     nnoremap gs :Gstatus<CR>
-
-    function! LightlineSignify()
-    let [added, modified, removed] = sy#repo#get_stats()
-    let l:sy = ''
-    for [flag, flagcount] in [
-        \   [exists("g:signify_sign_add")?g:signify_sign_add:'+', added],
-        \   [exists("g:signify_sign_delete")?g:signify_sign_delete:'-', removed],
-        \   [exists("g:signify_sign_change")?g:signify_sign_change:'!', modified]
-        \ ]
-        if flagcount> 0
-            let l:sy .= printf('%s%d', flag, flagcount)
-        endif
-    endfor
-    if !empty(l:sy)
-        let l:sy = printf('[%s]', l:sy)
-        let l:sy_vcs = get(b:sy, 'updated_by', '???')
-        return printf('%s%s', l:sy_vcs, l:sy)
-    else
-        return ''
-    endif
-    endfunction
 
     " speed optimizations
     let g:gitgutter_realtime = 1
@@ -269,6 +241,4 @@ if has('gui_running') || has('nvim')
     highlight Directory guifg=#7e8aa2 ctermfg=red
     let g:NERDTreeHijackNetrw=1
     let NERDTreeMinimalUI=1
-else 
-    colorscheme sourcerer
 endif
