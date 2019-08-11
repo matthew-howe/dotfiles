@@ -42,40 +42,32 @@ set termguicolors
 " plugins
 call plug#begin()
 if has('nvim')
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-endif
-if has('gui_running')
-    Plug 'Shougo/deoplete.nvim'
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
-endif
-if has('nvim') || has('gui_running')
-    Plug 'w0rp/ale'
-    Plug 'scrooloose/nerdtree'
-    Plug 'tpope/vim-fugitive'
-    Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
-    Plug 'airblade/vim-gitgutter'
-    Plug 'Shougo/deoplete-clangx'
-    Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
-    Plug 'deoplete-plugins/deoplete-jedi'
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
-    Plug 'tpope/vim-vinegar'
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
 endif
-Plug '/usr/local/opt/fzf'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-Plug 'mileszs/ack.vim'
+Plug 'Shougo/deoplete-clangx'
+Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+Plug 'deoplete-plugins/deoplete-jedi'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-commentary'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
-Plug 'mattn/emmet-vim'
-Plug 'rhysd/vim-wasm'
-Plug 'tpope/vim-commentary'
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'mileszs/ack.vim'
 Plug 'airblade/vim-rooter'
+Plug 'w0rp/ale'
+Plug 'scrooloose/nerdtree'
 call plug#end()
 packloadall
 silent! helptags ALL
-
 
 " various autocommands
 let g:deoplete#enable_at_startup = 1
