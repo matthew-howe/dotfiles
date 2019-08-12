@@ -65,11 +65,13 @@ Plug 'mileszs/ack.vim'
 Plug 'airblade/vim-rooter'
 Plug 'w0rp/ale'
 Plug 'scrooloose/nerdtree'
+Plug 'itchyny/lightline.vim'
 call plug#end()
 packloadall
 silent! helptags ALL
 
 " various autocommands
+let g:rooter_silent_chdir = 1
 let g:deoplete#enable_at_startup = 1
 augroup minivimrc
     autocmd!
@@ -185,6 +187,9 @@ function! s:CCR()
     else | return "\<CR>" | endif
 endfunction
 
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ }
 
 if has('gui_running') || has('nvim')
     set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\%{LinterStatus()}\ %P
