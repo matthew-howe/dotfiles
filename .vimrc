@@ -3,7 +3,6 @@
 " filetype support
 filetype plugin indent on
 syntax on
-colorscheme sourcerer
 
 " various settings
 set autoindent
@@ -12,13 +11,14 @@ set complete+=d
 set foldlevelstart=999
 set foldmethod=indent
 set grepprg=LC_ALL=C\ grep\ -nrsH
-set guifont=Iosevka:h13
+set guifont=SF\ Mono:h13
 set hidden
 set incsearch
 set mouse=a
 set noswapfile
 set path& | let &path .= "**"
 set ruler
+set number
 set shiftround
 set shiftwidth=4
 set expandtab
@@ -33,7 +33,6 @@ set splitbelow
 set laststatus=2
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 set noeb vb t_vb=
-" set numberV
 set guioptions=
 au GUIEnter * set vb t_vb=
 runtime macros/matchit.vim
@@ -81,6 +80,7 @@ augroup minivimrc
     autocmd VimEnter            * cwindow
     " Git-specific settings
     autocmd FileType gitcommit nnoremap <buffer> { ?^@@<CR>|nnoremap <buffer> } /^@@<CR>|setlocal iskeyword+=-
+    autocmd FileType java setlocal omnifunc=javacomplete#Complete 
 augroup END
 
 " commands for adjusting indentation rules manually
@@ -190,6 +190,11 @@ endfunction
 let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ }
+
+if has('gui_running')
+else 
+    colorscheme sourcerer
+endif
 
 if has('gui_running') || has('nvim')
     set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\%{LinterStatus()}\ %P
