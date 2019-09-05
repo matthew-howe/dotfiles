@@ -31,6 +31,7 @@ set wildmode=full
 set clipboard=unnamed
 set splitbelow
 set laststatus=2
+set wrap linebreak nolist
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 set noeb vb t_vb=
 set guioptions=
@@ -63,8 +64,9 @@ Plug 'airblade/vim-gitgutter'
 Plug 'mileszs/ack.vim'
 Plug 'airblade/vim-rooter'
 Plug 'w0rp/ale'
-Plug 'scrooloose/nerdtree'
 Plug 'itchyny/lightline.vim'
+Plug 'mattn/emmet-vim'
+Plug 'tpope/vim-vinegar'
 call plug#end()
 packloadall
 silent! helptags ALL
@@ -87,7 +89,7 @@ augroup END
 command! -nargs=1 Spaces let b:wv = winsaveview() | execute "setlocal tabstop=" . <args> . " expandtab"   | silent execute "%!expand -it "  . <args> . "" | call winrestview(b:wv) | setlocal ts? sw? sts? et?
 command! -nargs=1 Tabs   let b:wv = winsaveview() | execute "setlocal tabstop=" . <args> . " noexpandtab" | silent execute "%!unexpand -t " . <args> . "" | call winrestview(b:wv) | setlocal ts? sw? sts? et?
 
-" compiling 
+" file compiling and execution 
 nnoremap ; :
 nnoremap ÷ :w<CR>:!node %<CR>
 nnoremap ≥ :w<CR>:!python3 %<CR>
@@ -99,6 +101,7 @@ nnoremap ' `
 " juggling with files
 command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, '--color-path="0;33"', <bang>0)
 nnoremap = :Ag<CR>
+nnoremap - :Ex<CR>
 
 " juggling with buffers
 nnoremap gb :Buffers<CR>
@@ -192,6 +195,7 @@ let g:lightline = {
       \ }
 
 if has('gui_running')
+    colorscheme beauty256
 else 
     colorscheme sourcerer
 endif
@@ -234,13 +238,4 @@ if has('gui_running') || has('nvim')
     highlight GitGutterChange ctermfg=yellow ctermbg=0
     highlight GitGutterDelete ctermfg=red ctermbg=0
     highlight GitGutterChangeDelete ctermfg=red ctermbg=0
-
-    " file explorer
-    nnoremap - :NERDTreeToggle<CR>
-    let NERDTreeQuitOnOpen=1
-    let g:NERDTreeDirArrowExpandable = '▸'
-    let g:NERDTreeDirArrowCollapsible = '▾'
-    highlight Directory guifg=#7e8aa2 ctermfg=red
-    let g:NERDTreeHijackNetrw=1
-    let NERDTreeMinimalUI=1
 endif
