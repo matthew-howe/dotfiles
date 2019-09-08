@@ -1,10 +1,7 @@
-" MINIVIMRC
-
-" filetype support
 filetype plugin indent on
 syntax on
-
-" various settings
+colorscheme off
+set background=light
 set autoindent
 set backspace=indent,eol,start
 set complete+=d
@@ -67,6 +64,7 @@ Plug 'w0rp/ale'
 Plug 'itchyny/lightline.vim'
 Plug 'mattn/emmet-vim'
 Plug 'tpope/vim-vinegar'
+Plug 'pbrisbin/vim-mkdir'
 call plug#end()
 packloadall
 silent! helptags ALL
@@ -194,11 +192,6 @@ let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ }
 
-if has('gui_running')
-    colorscheme beauty256
-else 
-    colorscheme sourcerer
-endif
 
 if has('gui_running') || has('nvim')
     set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\%{LinterStatus()}\ %P
