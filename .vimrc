@@ -193,42 +193,41 @@ let g:lightline = {
       \ }
 
 
-if has('gui_running') || has('nvim')
-    set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\%{LinterStatus()}\ %P
-    function! LinterStatus() abort
-        let l:counts = ale#statusline#Count(bufnr(''))
+set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\%{LinterStatus()}\ %P
+function! LinterStatus() abort
+    let l:counts = ale#statusline#Count(bufnr(''))
 
-        let l:all_errors = l:counts.error + l:counts.style_error
-        let l:all_non_errors = l:counts.total - l:all_errors
+    let l:all_errors = l:counts.error + l:counts.style_error
+    let l:all_non_errors = l:counts.total - l:all_errors
 
-        return l:counts.total == 0 ? 'OK' : printf(
-        \   '%dW %dE',
-        \   all_non_errors,
-        \   all_errors
-        \)
-    endfunction
-    " juggling with git
-    nnoremap gs :Gstatus<CR>
+    return l:counts.total == 0 ? 'OK' : printf(
+    \   '%dW %dE',
+    \   all_non_errors,
+    \   all_errors
+    \)
+endfunction
 
-    " speed optimizations
-    let g:gitgutter_realtime = 1
-    let g:gitgutter_eager = 1
-    let g:gitgutter_max_signs = 1500
-    let g:gitgutter_diff_args = '-w'
+" juggling with git
+nnoremap gs :Gstatus<CR>
 
-    " custom symbols
-    let g:gitgutter_sign_added = '+'
-    let g:gitgutter_sign_modified = '~'
-    let g:gitgutter_sign_removed = '-'
-    let g:gitgutter_sign_removed_first_line = '^'
-    let g:gitgutter_sign_modified_removed = ':'
-    let g:ale_sign_error = '✘'
-    let g:ale_sign_warning = "◉"
+" speed optimizations
+let g:gitgutter_realtime = 1
+let g:gitgutter_eager = 1
+let g:gitgutter_max_signs = 1500
+let g:gitgutter_diff_args = '-w'
 
-    " color overrrides
-    highlight clear SignColumn
-    highlight GitGutterAdd ctermfg=green ctermbg=0
-    highlight GitGutterChange ctermfg=yellow ctermbg=0
-    highlight GitGutterDelete ctermfg=red ctermbg=0
-    highlight GitGutterChangeDelete ctermfg=red ctermbg=0
-endif
+" custom symbols
+let g:gitgutter_sign_added = '+'
+let g:gitgutter_sign_modified = '~'
+let g:gitgutter_sign_removed = '-'
+let g:gitgutter_sign_removed_first_line = '^'
+let g:gitgutter_sign_modified_removed = ':'
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = "◉"
+
+" color overrrides
+highlight clear SignColumn
+highlight GitGutterAdd ctermfg=green ctermbg=0
+highlight GitGutterChange ctermfg=yellow ctermbg=0
+highlight GitGutterDelete ctermfg=red ctermbg=0
+highlight GitGutterChangeDelete ctermfg=red ctermbg=0
