@@ -98,9 +98,7 @@ export EDITOR='nvim'
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias v="nvim"
 alias gs="git status"
-alias ga="git add ."
-alias gc="git commit"
-alias gp="git push orgigin master"
+alias gp="git push origin master"
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/matthewhowe/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/matthewhowe/Downloads/google-cloud-sdk/path.zsh.inc'; fi
