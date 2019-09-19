@@ -1,7 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =5
-let g:netrw_dirhist_1='/Users/matthewhowe/.vim/colors'
-let g:netrw_dirhist_2='/Users/matthewhowe/algorithm-database'
-let g:netrw_dirhist_3='/Users/matthewhowe/algorithm-database/adventofcode'
-let g:netrw_dirhist_4='/Users/matthewhowe/algorithm-database'
-let g:netrw_dirhist_5='/Users/matthewhowe/algorithm-database/cake'
