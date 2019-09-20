@@ -1,7 +1,7 @@
 filetype plugin indent on
 syntax on
-colorscheme off
-set background=light
+colorscheme gruvbox
+set background=dark
 set autoindent
 set backspace=indent,eol,start
 set complete+=d
@@ -17,9 +17,9 @@ set path& | let &path .= "**"
 set ruler
 set number
 set shiftround
-set shiftwidth=4
+set shiftwidth=2
 set expandtab
-set tabstop=4
+set tabstop=2
 let &softtabstop = &tabstop
 set tags=./tags;,tags;
 set wildcharm=<C-z>
@@ -65,6 +65,8 @@ Plug 'itchyny/lightline.vim'
 Plug 'mattn/emmet-vim'
 Plug 'tpope/vim-vinegar'
 Plug 'pbrisbin/vim-mkdir'
+Plug 'scrooloose/nerdtree'
+Plug 'cakebaker/scss-syntax.vim'
 call plug#end()
 packloadall
 silent! helptags ALL
@@ -99,7 +101,8 @@ nnoremap ' `
 " juggling with files
 command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, '--color-path="0;33"', <bang>0)
 nnoremap = :Ag<CR>
-nnoremap - :Ex<CR>
+nnoremap - :NERDTreeToggle<CR>
+let g:NERDTreeQuitOnOpen = 1
 
 " juggling with buffers
 nnoremap gb :Buffers<CR>
@@ -209,6 +212,7 @@ endfunction
 
 " juggling with git
 nnoremap gs :Gstatus<CR>
+nnoremap g9 :Gpush origin master<CR>
 
 " speed optimizations
 let g:gitgutter_realtime = 1
