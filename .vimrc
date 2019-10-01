@@ -1,7 +1,8 @@
+" general settings
 filetype plugin indent on
 syntax on
-colorscheme gruvbox
-set background=dark
+colorscheme gocode
+set background=light
 set autoindent
 set backspace=indent,eol,start
 set complete+=d
@@ -62,6 +63,7 @@ Plug 'mileszs/ack.vim'
 Plug 'airblade/vim-rooter'
 Plug 'w0rp/ale'
 Plug 'itchyny/lightline.vim'
+Plug 'edkolev/tmuxline.vim'
 Plug 'mattn/emmet-vim'
 Plug 'tpope/vim-vinegar'
 Plug 'pbrisbin/vim-mkdir'
@@ -108,7 +110,6 @@ let g:NERDTreeQuitOnOpen = 1
 nnoremap gb :Buffers<CR>
 tnoremap `` <C-\><C-n><C-w><C-w>
 nnoremap `` <C-w><C-w>
-
 
 " juggling with tags
 nnoremap ,j :tjump /
@@ -195,6 +196,8 @@ let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ }
 
+let g:tmuxline_theme = 'vim_statusline_2'
+let g:tmuxline_powerline_separators = 0
 
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\%{LinterStatus()}\ %P
 function! LinterStatus() abort
@@ -235,3 +238,4 @@ highlight GitGutterAdd ctermfg=green ctermbg=0
 highlight GitGutterChange ctermfg=yellow ctermbg=0
 highlight GitGutterDelete ctermfg=red ctermbg=0
 highlight GitGutterChangeDelete ctermfg=red ctermbg=0
+let g:tmuxline_theme = 'wombat'
