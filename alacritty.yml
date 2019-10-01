@@ -170,22 +170,22 @@ colors:
 
   normal:
     black: '0x383a42'
-    red: '0x383a42'
-    green: '0x383a42'
-    yellow: '0x383a42'
-    blue: '0x383a42'
-    magenta: '0x383a42'
-    cyan: '0x383a42'
+    red: '0x853E64'
+    green: '0x546348'
+    yellow: '0x255E22'
+    blue: '0x587EA8'
+    magenta: '0x853E64'
+    cyan: '0x323E7D'
     white: '0xfafafa'
 
   bright:
     black: '0x383a42'
     red: '0x383a42'
-    green: '0x383a42'
-    yellow: '0x383a42'
-    blue: '0x383a42'
-    magenta: '0x383a42'
-    cyan: '0x383a42'
+    green: '0x546348'
+    yellow: '0x255E22'
+    blue: '0x587EA8'
+    magenta: '0x853E64'
+    cyan: '0x323E7D'
     white: '0xfafafa'
     
   # Cursor colors
@@ -193,7 +193,7 @@ colors:
   # Colors which should be used to draw the terminal cursor. If these are unset,
   # the cursor color will be the inverse of the cell color.
   cursor:
-   text: '0xffffff'
+   text: 
    cursor: '0x000000'
   
   # Selection colors
