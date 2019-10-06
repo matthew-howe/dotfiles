@@ -241,7 +241,6 @@ highlight GitGutterDelete ctermfg=red ctermbg=0
 highlight GitGutterChangeDelete ctermfg=red ctermbg=0
 let g:github_colors_soft = 1
 let g:github_colors_block_diffmark = 0
-highlight Visual     cterm=NONE ctermbg=0  ctermfg=251  gui=NONE guibg=black guifg=white
 if &diff
     colorscheme github
 endif
