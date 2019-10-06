@@ -198,8 +198,6 @@ let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ }
 
-let g:tmuxline_theme = 'vim_statusline_2'
-let g:tmuxline_powerline_separators = 0
 
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\%{LinterStatus()}\ %P
 function! LinterStatus() abort
@@ -243,7 +241,6 @@ highlight GitGutterDelete ctermfg=red ctermbg=0
 highlight GitGutterChangeDelete ctermfg=red ctermbg=0
 let g:github_colors_soft = 1
 let g:github_colors_block_diffmark = 0
-let g:tmuxline_theme = 'wombat'
 highlight Visual     cterm=NONE ctermbg=0  ctermfg=251  gui=NONE guibg=black guifg=white
 if &diff
     colorscheme github
