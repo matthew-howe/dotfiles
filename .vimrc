@@ -1,7 +1,6 @@
 " general settings
 filetype plugin indent on
 syntax on
-colorscheme gocode
 set background=light
 set autoindent
 set backspace=indent,eol,start
@@ -63,15 +62,15 @@ Plug 'mileszs/ack.vim'
 Plug 'airblade/vim-rooter'
 Plug 'w0rp/ale'
 Plug 'itchyny/lightline.vim'
-Plug 'edkolev/tmuxline.vim'
 Plug 'mattn/emmet-vim'
-Plug 'tpope/vim-vinegar'
-Plug 'pbrisbin/vim-mkdir'
 Plug 'scrooloose/nerdtree'
 Plug 'cakebaker/scss-syntax.vim'
+Plug 'isRuslan/vim-es6'
 call plug#end()
 packloadall
 silent! helptags ALL
+
+
 
 " various autocommands
 let g:rooter_silent_chdir = 1
@@ -85,6 +84,7 @@ augroup minivimrc
     " Git-specific settings
     autocmd FileType gitcommit nnoremap <buffer> { ?^@@<CR>|nnoremap <buffer> } /^@@<CR>|setlocal iskeyword+=-
     autocmd FileType java setlocal omnifunc=javacomplete#Complete 
+    " highlight colors
 augroup END
 
 " commands for adjusting indentation rules manually
@@ -105,6 +105,8 @@ command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, '--color-path="0;33"', <ban
 nnoremap = :Ag<CR>
 nnoremap - :NERDTreeToggle<CR>
 let g:NERDTreeQuitOnOpen = 1
+let NERDTreeMinimalUI = 1
+let g:NERDTreeShowLineNumbers=1
 
 " juggling with buffers
 nnoremap gb :Buffers<CR>
@@ -233,9 +235,16 @@ let g:ale_sign_error = '✘'
 let g:ale_sign_warning = "◉"
 
 " color overrrides
+colorscheme gruvbox
 highlight clear SignColumn
 highlight GitGutterAdd ctermfg=green ctermbg=0
 highlight GitGutterChange ctermfg=yellow ctermbg=0
 highlight GitGutterDelete ctermfg=red ctermbg=0
 highlight GitGutterChangeDelete ctermfg=red ctermbg=0
+let g:github_colors_soft = 1
+let g:github_colors_block_diffmark = 0
 let g:tmuxline_theme = 'wombat'
+highlight Visual     cterm=NONE ctermbg=0  ctermfg=251  gui=NONE guibg=black guifg=white
+if &diff
+    colorscheme github
+endif
