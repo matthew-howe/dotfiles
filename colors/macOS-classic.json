@@ -1,9 +1,9 @@
 {
 	// Reference https://code.visualstudio.com/docs/getstarted/theme-color-reference
 	"name": "macOS Classic",
-	"author": "Jason Lee",
+	"author": "Matthew Howe",
 	"maintainers": [
-			"Jason Lee <huacnlee@gmail.com>"
+			"Matthew Howe <mail@mathw.co>"
 	],
 	"type": "light",
 	"semanticClass": "theme.macos-classic",
