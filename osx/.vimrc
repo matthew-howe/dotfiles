@@ -1,13 +1,14 @@
 " general settings
 filetype plugin indent on
 syntax on
+set background=dark
 set autoindent
 set backspace=indent,eol,start
 set complete+=d
 set foldlevelstart=999
 set foldmethod=indent
 set grepprg=LC_ALL=C\ grep\ -nrsH
-set guifont=SF\ Mono:h13
+set guifont=Terminus\ (TTF):h21
 set hidden
 set incsearch
 set mouse=a
@@ -31,14 +32,20 @@ set wrap linebreak nolist
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 set noeb vb t_vb=
 set guioptions=
+
+
+
 au GUIEnter * set vb t_vb=
 runtime macros/matchit.vim
-set guifont=sf\ mono
-colorscheme xcode-low-key
+set guifont=courier\ new
+
+colorscheme gruvbox
+
 map - :Ex<CR>
 
 " plugins
 call plug#begin()
+Plug 'haya14busa/incsearch.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
@@ -58,6 +65,8 @@ Plug 'mattn/emmet-vim'
 Plug 'scrooloose/nerdtree'
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'isRuslan/vim-es6'
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
 call plug#end()
 packloadall
 silent! helptags ALLall plug#end()
@@ -198,3 +207,8 @@ function! InsertTabWrapper()
 endfunction
 inoremap <expr> <tab> InsertTabWrapper()
 inoremap <s-tab> <c-n>
+
+" insearch
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
