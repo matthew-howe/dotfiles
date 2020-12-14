@@ -8,7 +8,6 @@ set complete+=d
 set foldlevelstart=999
 set foldmethod=indent
 set grepprg=LC_ALL=C\ grep\ -nrsH
-set guifont=Terminus\ (TTF):h21
 set hidden
 set incsearch
 set mouse=a
